@@ -1,8 +1,7 @@
-package com.da.da_25_26;
+package com.da.da_25_26.models;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Product {
 
@@ -20,7 +19,7 @@ public class Product {
   static {
     productList.add(new Product(1L, "Classic T-Shirt", 19.99, "M", "White"));
     productList.add(new Product(2L, "Running Shoes", 89.50, "43", "Black"));
-    productList.add(new Product(3L, "Denim Jeans", 75.00, "32/34", "Blue"));
+    productList.add(new Product(3L, "Denim Jeans", 75.00, "32/34", "Black"));
     productList.add(new Product(4L, "Wool Scarf", 25.00, "One Size", "Gray"));
     productList.add(new Product(5L, "Leather Belt", 45.99, "L", "Brown"));
   }

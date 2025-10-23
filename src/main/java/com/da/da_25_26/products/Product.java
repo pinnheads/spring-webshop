@@ -1,4 +1,4 @@
-package com.da.da_25_26.models;
+package com.da.da_25_26.products;
 
 import java.util.ArrayList;
 import java.util.List;

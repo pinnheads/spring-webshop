@@ -73,4 +73,10 @@ public class User {
     return userList;
   }
 
+  public static User createUser(String firstName, String lastName, String email, String address) {
+    Long newUserId = userList.getLast().id++;
+    userList.addLast(new User(newUserId, firstName, lastName, email, address));
+    return userList.getLast();
+  }
+
 }

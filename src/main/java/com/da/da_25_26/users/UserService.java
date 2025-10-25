@@ -12,4 +12,9 @@ public class UserService implements IUserService {
     return User.getUsers().stream()
         .filter(user -> user.getId() == id).findFirst();
   }
+
+  @Override
+  public User createUser(String firstName, String lastName, String email, String address) {
+    return User.createUser(firstName, lastName, email, address);
+  }
 }

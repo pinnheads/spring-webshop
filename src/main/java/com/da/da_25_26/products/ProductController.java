@@ -3,7 +3,9 @@ package com.da.da_25_26.products;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -38,6 +40,12 @@ public class ProductController {
         .filter(item -> item.getId() == reqId)
         .findFirst();
     return product;
+  }
+
+  @PostMapping("/create")
+  public Product createNewProduct(@RequestParam String name, @RequestParam String size, @RequestParam String color,
+      @RequestParam double price) {
+    return productService.createProduct(name, size, color, price);
   }
 
   @GetMapping("/color/{color}")

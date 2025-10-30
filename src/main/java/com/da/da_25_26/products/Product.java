@@ -78,4 +78,11 @@ public class Product {
   public static List<Product> getProducts() {
     return productList;
   }
+
+  // create product
+  public static Product createProduct(String name, String size, String color, Double price) {
+    Long newProductId = productList.getLast().id++;
+    productList.add(new Product(newProductId, name, price, size, color));
+    return productList.getLast();
+  }
 }

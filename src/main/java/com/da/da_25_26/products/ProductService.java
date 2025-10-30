@@ -21,4 +21,9 @@ public class ProductService implements IProductService {
         .filter(item -> item.getSize().equalsIgnoreCase(size))
         .collect(Collectors.toList());
   }
+
+  @Override
+  public Product createProduct(String name, String size, String color, Double price) {
+    return Product.createProduct(name, size, color, price);
+  }
 }

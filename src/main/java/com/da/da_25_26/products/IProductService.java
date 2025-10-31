@@ -12,4 +12,6 @@ interface IProductService {
   Product addProduct(Product newProduct);
 
   List<Product> deleteProductById(Long id);
+
+  Product updateProduct(Long id, Product updatedProduct);
 }

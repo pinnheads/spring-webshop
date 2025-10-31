@@ -1,10 +1,15 @@
 package com.da.da_25_26.products;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,6 +58,19 @@ public class ProductController {
   @PostMapping("/add")
   public Product addNewProduct(@RequestBody Product product) {
     return productService.addProduct(product);
+  }
+
+  @GetMapping("/update")
+  public ResponseEntity<Resource> getProductForUpdate() {
+    Resource resource = new ClassPathResource("./static/update/product.html");
+    return ResponseEntity.ok()
+        .contentType(MediaType.TEXT_HTML)
+        .body(resource);
+  }
+
+  @PutMapping("/update/{id}")
+  public Product updateProduct(@PathVariable Long id, @RequestBody Product updatedProduct) {
+    return productService.updateProduct(id, updatedProduct);
   }
 
   @DeleteMapping("/delete/{id}")

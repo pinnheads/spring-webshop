@@ -95,4 +95,11 @@ public class Product {
     productList.removeIf(product -> product.getId() == id);
     return productList;
   }
+
+  public static Product updateProduct(Long id, Product updatedProduct) {
+    productList.removeIf(product -> product.getId() == id);
+    System.out.println(updatedProduct);
+    productList.addLast(updatedProduct);
+    return productList.getLast();
+  }
 }

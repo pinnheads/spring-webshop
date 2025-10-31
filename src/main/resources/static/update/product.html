@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <link href="../css/style.css" rel="stylesheet">
+</head>
+
+<body>
+  <h1>Update Product</h1>
+  <form id="idForm">
+    <input type="number" id="idValue" name="id" value="" placeholder="Enter the id of product to be updated">
+    <button type="submit">Fetch Details</button>
+  </form>
+  <form id="updateProduct" hidden>
+    <label for="id">ID</label>
+    <input id="product-id" type="" name="id" value="" disabled placeholder="Enter a name" />
+    <label for="name">Name</label>
+    <input id="product-name" type="text" name="name" value="" placeholder="Enter a name" />
+    <label for="price">Price</label>
+    <input id="product-price" type="number" name="price" value="" placeholder="Enter a price" />
+    <label for="size">Size</label>
+    <input id="product-size" type="text" name="size" value="" placeholder="Enter Size" />
+    <label for="color">Color</label>
+    <input id="product-color" type="text" name="color" value="" placeholder="Enter Color" />
+    <button type="submit">Update Product</button>
+  </form>
+
+  <script>
+    const idForm = document.getElementById("idForm");
+    const updateProduct = document.getElementById("updateProduct");
+
+    // Fetch and update the fields
+    idForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const id = document.getElementById("idValue").value;
+      fetch(`http://localhost:8080/products/${id}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error fetching the details of the requested product!');
+          }
+          return response.json()
+        })
+        .then(data => {
+          updateProduct.hidden = false;
+          document.getElementById("product-id").value = data.id;
+          document.getElementById("product-name").value = data.name;
+          document.getElementById("product-price").value = data.price;
+          document.getElementById("product-size").value = data.size;
+          document.getElementById("product-color").value = data.color;
+        })
+        .catch(error => console.error(error))
+    })
+
+    updateProduct.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData.entries());
+      const id = document.getElementById("product-id").value;
+
+      const requestOptions = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      }
+
+      fetch(`http://localhost:8080/products/update/${id}`, requestOptions)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          alert("Product Updated!! Redirecting now to the product details...")
+          window.location.href = `http://localhost:8080/products/${data.id}`;
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    })
+  </script>
+</body>
+
+</html>

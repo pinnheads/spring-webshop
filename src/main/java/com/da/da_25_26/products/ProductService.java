@@ -38,4 +38,10 @@ public class ProductService implements IProductService {
   public List<Product> deleteProductById(Long id) {
     return Product.deleteProductById(id);
   }
+
+  @Override
+  public Product updateProduct(Long id, Product updatedProduct) {
+    return Product.updateProduct(id, updatedProduct);
+  }
+
 }

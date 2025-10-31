@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link href="../css/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <form id="deleteForm">
+      <input type="number" id="deleteId" name="id" value="" placeholder="id">
+      <button type="submit">Delete Product</button>
+    </form>
+  </body>
+  <script>
+    const deleteForm = document.getElementById("deleteForm");
+    const url = "http://localhost:8080/products/delete/"
+    deleteForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const id = document.getElementById("deleteId").value;
+      const requestOptions = {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+      fetch(url+id, requestOptions)
+        .then(response => {
+          if(!response.ok) {
+            throw new Error('Error fetching the delete request');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log(data)
+          alert(`Product with id ${id} id deleted! The page will now be redirected to show the list of all Products!!!`);
+          window.location.href = "http://localhost:8080/products";
+        })
+        .catch(error => console.log(error))
+    })
+  </script>
+</html>

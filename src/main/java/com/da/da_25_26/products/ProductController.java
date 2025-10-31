@@ -1,6 +1,7 @@
 package com.da.da_25_26.products;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,6 +53,11 @@ public class ProductController {
   @PostMapping("/add")
   public Product addNewProduct(@RequestBody Product product) {
     return productService.addProduct(product);
+  }
+
+  @DeleteMapping("/delete/{id}")
+  public List<Product> deleteProduct(@PathVariable Long id) {
+    return productService.deleteProductById(id);
   }
 
   @GetMapping("/color/{color}")

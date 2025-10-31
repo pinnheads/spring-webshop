@@ -90,4 +90,9 @@ public class Product {
     productList.addLast(newProduct);
     return productList.getLast();
   }
+
+  public static List<Product> deleteProductById(Long id) {
+    productList.removeIf(product -> product.getId() == id);
+    return productList;
+  }
 }

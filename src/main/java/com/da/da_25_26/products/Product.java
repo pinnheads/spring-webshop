@@ -85,4 +85,9 @@ public class Product {
     productList.add(new Product(newProductId, name, price, size, color));
     return productList.getLast();
   }
+
+  public static Product addProduct(Product newProduct) {
+    productList.addLast(newProduct);
+    return productList.getLast();
+  }
 }

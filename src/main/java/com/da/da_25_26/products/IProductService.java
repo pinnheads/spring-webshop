@@ -8,4 +8,6 @@ interface IProductService {
   List<Product> filterProductBySize(String size);
 
   Product createProduct(String name, String size, String color, Double price);
+
+  Product addProduct(Product newProduct);
 }

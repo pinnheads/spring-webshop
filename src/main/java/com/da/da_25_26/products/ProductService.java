@@ -26,4 +26,11 @@ public class ProductService implements IProductService {
   public Product createProduct(String name, String size, String color, Double price) {
     return Product.createProduct(name, size, color, price);
   }
+
+  @Override
+  public Product addProduct(Product newProduct) {
+    Long newID = Product.getProducts().getLast().getId() + 1L;
+    newProduct.setId(newID);
+    return Product.addProduct(newProduct);
+  }
 }

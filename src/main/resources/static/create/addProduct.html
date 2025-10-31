@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create Product</title>
+    <link href="../css/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <form id="createForm" action="/products/add" method="POST">
+      <h1>Create a new product</h1>
+      <input type="text" name="name" value="" placeholder="Enter a name" />
+      <input type="number" name="price" value="" placeholder="Enter a price" />
+      <input type="text" name="size" value="" placeholder="Enter Size" />
+      <input type="text" name="color" value="" placeholder="Enter Color" />
+      <button type="submit">Add New Product</button>
+    </form>
+
+    <script>
+      const url = "http://localhost:8080/products/add";
+      const form = document.getElementById("createForm");
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        const data = Object.fromEntries(formData.entries());
+        const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        }
+        fetch(url, requestOptions)
+          .then(response => {
+            if(!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log(data)
+            window.location.href = "http://localhost:8080/products";
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      })
+    </script>
+  </body>
+</html>

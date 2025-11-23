@@ -12,11 +12,13 @@
   <header th:replace="fragments.header :: header"></header>
 
   <div class="details">
-    <h2 class="product-name">Product: <span th:text="${item.name}">Name</span></h2>
-    <p class="product-size">Size: <span th:text="${item.size}">Size</span></p>
-    <p class="product-color">Color: <span th:text="${item.color}">Color</span></p>
-    <p class="product-price">Price: $<span th:text="${#numbers.formatDecimal(item.price, 1, 2)}">Price</span></p>
-    <button type="button"><a th:href="@{/api/cart/add/{id}(id=${item.id})}">Add to cart</a></button>
+    <h2 class="product-name">Product: <span th:text="${productDetailDTO.product.name}">Name</span></h2>
+    <p class="product-size">Size: <span th:text="${productDetailDTO.product.size}">Size</span></p>
+    <p class="product-color">Color: <span th:text="${productDetailDTO.product.color}">Color</span></p>
+    <p class="product-inventory">Stock: <span th:text="${productDetailDTO.stockCount}">Color</span></p>
+    <p class="product-price">Price: $<span
+        th:text="${#numbers.formatDecimal(productDetailDTO.product.price, 1, 2)}">Price</span></p>
+    <button type="button"><a th:href="@{/api/cart/add/{id}(id=${productDetailDTO.product.id})}">Add to cart</a></button>
   </div>
 </body>
 

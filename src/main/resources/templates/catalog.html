@@ -9,16 +9,7 @@
 </head>
 
 <body>
-  <!-- Header -->
-  <header class="header-bar">
-    <div class="logo">My Webshop</div>
-
-    <nav class="nav-links">
-      <a href="/index.html">Dashboard</a>
-      <a href="/api/products">Catalog</a>
-    </nav>
-  </header>
-
+  <header th:replace="fragments.header :: header"></header>
   <h2 class="catalog-heading">Browse our <span th:text="${#lists.size(allProducts)}">Number of Products</span> products
   </h2>
   <!-- Catalog -->

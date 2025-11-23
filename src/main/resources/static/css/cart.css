@@ -1,0 +1,16 @@
+.total {
+  margin: 30px 10px;
+  background-color: #a8d4e0;
+  padding: 0px 10px 30px 10px;
+  border: solid;
+  border-color: black;
+  border-radius: 5px;
+  font-weight: bold;
+  width: 80%;
+}
+
+.total .heading {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 15px 0;
+}

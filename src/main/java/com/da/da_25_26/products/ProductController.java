@@ -38,15 +38,12 @@ public class ProductController {
 
   @GetMapping("")
   public List<Product> getAllProducts() {
-    return Product.getProducts();
+    return productService.getAllProducts();
   }
 
   @GetMapping("/{reqId}")
   public Optional<Product> getProductWithId(@PathVariable long reqId) {
-    Optional<Product> product = Product.getProducts().stream()
-        .filter(item -> item.getId() == reqId)
-        .findFirst();
-    return product;
+    return productService.getSingleProduct(reqId);
   }
 
   @PostMapping("/create")

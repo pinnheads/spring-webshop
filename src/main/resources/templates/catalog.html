@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catalog</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header-bar">
+    <div class="logo">My Webshop</div>
+
+    <nav class="nav-links">
+      <a href="/index.html">Dashboard</a>
+      <a href="/api/products">Catalog</a>
+    </nav>
+  </header>
+
+  <h2 class="catalog-heading">Browse our <span th:text="${#lists.size(allProducts)}">Number of Products</span> products
+  </h2>
+  <!-- Catalog -->
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Size</th>
+        <th>Color</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="prod: ${allProducts}">
+        <td th:text="${prod.name}">Name</td>
+        <td th:text="${#numbers.formatDecimal(prod.price, 1, 2)}">Price</td>
+        <td th:text="${prod.size}">Size</td>
+        <td th:text="${prod.color}">Color</td>
+        <td><a th:href="@{/api/products/details/{id}(id=${prod.id})}">Details</a></td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Details</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header-bar">
+    <div class="logo">My Webshop</div>
+
+    <nav class="nav-links">
+      <a href="/index.html">Dashboard</a>
+      <a href="/api/products">Catalog</a>
+    </nav>
+  </header>
+
+  <div class="details">
+    <h2 class="product-name">Product: <span th:text="${item.name}">Name</span></h2>
+    <p class="product-size">Size: <span th:text="${item.size}">Size</span></p>
+    <p class="product-color">Color: <span th:text="${item.color}">Color</span></p>
+    <p class="product-price">Price: $<span th:text="${item.price}">Price</span></p>
+  </div>
+</body>
+
+</html>

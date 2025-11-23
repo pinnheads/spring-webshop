@@ -1,6 +1,7 @@
 package com.da.da_25_26.products;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -44,4 +45,15 @@ public class ProductService implements IProductService {
     return Product.updateProduct(id, updatedProduct);
   }
 
+  @Override
+  public Optional<Product> getSingleProduct(Long id) {
+    return Product.getProducts().stream()
+        .filter(item -> item.getId() == id)
+        .findFirst();
+  }
+
+  @Override
+  public List<Product> getAllProducts() {
+    return Product.getProducts();
+  }
 }

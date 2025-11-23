@@ -1,8 +1,9 @@
 package com.da.da_25_26.products;
 
 import java.util.List;
+import java.util.Optional;
 
-interface IProductService {
+public interface IProductService {
   List<Product> filterProductByColor(String color);
 
   List<Product> filterProductBySize(String size);
@@ -14,4 +15,8 @@ interface IProductService {
   List<Product> deleteProductById(Long id);
 
   Product updateProduct(Long id, Product updatedProduct);
+
+  Optional<Product> getSingleProduct(Long id);
+
+  List<Product> getAllProducts();
 }

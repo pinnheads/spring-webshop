@@ -7,37 +7,36 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.da.da_25_26.products.service.InventoryService;
-
 @Controller
 @RequestMapping("/api/cart")
 public class ShoppingCartController {
 
-  private IShoppingCartService shoppingCartService;
-  private InventoryService inventoryService;
+  private ShoppingCartFacade shoppingCartFacade;
 
   @Autowired
-  public ShoppingCartController(IShoppingCartService shoppingCartService, InventoryService inventoryService) {
-    this.shoppingCartService = shoppingCartService;
-    this.inventoryService = inventoryService;
+  public ShoppingCartController(ShoppingCartFacade shoppingCartFacade) {
+    this.shoppingCartFacade = shoppingCartFacade;
   }
 
   @GetMapping("")
   public String getShoppingCart(Model model) {
-    model.addAttribute("cart", shoppingCartService.getShoppingCart());
+    model.addAttribute("cart", shoppingCartFacade.getCart());
     return "cart";
   }
 
   @GetMapping("/add/{id}")
-  public String addProductToCart(@PathVariable long id, Model model) {
-    shoppingCartService.addProductToCart(id);
-    inventoryService.reduceStockForProductIdByOne(id);
-    return "redirect:/api/cart";
+  public String addProductToCart(@PathVariable long id) {
+    try {
+      shoppingCartFacade.addProductToCart(id);
+      return "redirect:/api/cart";
+    } catch (Exception e) {
+      return "redirect:/api/cart";
+    }
   }
 
   @GetMapping("/delete/{id}")
-  public String removeProductToCart(@PathVariable long id, Model model) {
-    shoppingCartService.removeProductFromCart(id);
+  public String removeProductToCart(@PathVariable long id) {
+    shoppingCartFacade.removeProductFromCart(id);
     return "redirect:/api/cart";
   }
 }

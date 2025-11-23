@@ -17,7 +17,14 @@ public class ShoppingCart {
   }
 
   public void removeProduct(Product product) {
-    products.remove(product);
+    if (products.containsKey(product)) {
+      int currentQuantity = products.get(product);
+      if (currentQuantity > 1) {
+        products.put(product, products.get(product) - 1);
+      } else {
+        products.remove(product);
+      }
+    }
   }
 
   public Double getTotal() {

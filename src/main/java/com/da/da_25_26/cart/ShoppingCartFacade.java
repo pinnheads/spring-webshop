@@ -22,6 +22,7 @@ public class ShoppingCartFacade {
 
   public ShoppingCart addProductToCart(Long id) {
     if (inventoryService.getStockForProductId(id) > 0) {
+      inventoryService.reduceStockForProductIdByOne(id);
       shoppingCartService.addProductToCart(id);
     } else {
       throw new RuntimeException("Product is out of stock! ID: " + id);
@@ -31,6 +32,7 @@ public class ShoppingCartFacade {
   }
 
   public void removeProductFromCart(Long id) {
+    inventoryService.increaseStockForProductIdByOne(id);
     shoppingCartService.removeProductFromCart(id);
   }
 }

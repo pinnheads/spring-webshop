@@ -21,6 +21,16 @@ public class InventoryService {
     return inventory.getOrDefault(productId, 0);
   }
 
+  public boolean increaseStockForProductIdByOne(Long productId) {
+    return increaseStockForProductId(productId, 1);
+  }
+
+  public boolean increaseStockForProductId(Long productId, int quantity) {
+    int currentStock = getStockForProductId(productId);
+    inventory.put(productId, currentStock + quantity);
+    return true;
+  }
+
   public boolean reduceStockForProductIdByOne(Long productId) {
     return reduceStockForProductId(productId, 1);
   }

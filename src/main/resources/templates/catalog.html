@@ -30,6 +30,7 @@
         <th>Size</th>
         <th>Color</th>
         <th>Link</th>
+        <th th:if="${edit}">Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -39,6 +40,7 @@
         <td th:text="${prod.size}">Size</td>
         <td th:text="${prod.color}">Color</td>
         <td><a th:href="@{/api/products/details/{id}(id=${prod.id})}">Details</a></td>
+        <td th:if="${edit}"><a th:href="@{/api/products/delete/{id}(id=${prod.id})}">Delete</a></td>
       </tr>
     </tbody>
   </table>

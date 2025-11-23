@@ -1,10 +1,14 @@
 package com.da.da_25_26.products.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.da.da_25_26.products.Product;
 import com.da.da_25_26.products.IProductService;
@@ -21,8 +25,16 @@ public class ProductCatalogController {
   }
 
   @GetMapping("")
-  public String allProducts(Model model) {
+  public String allProducts(@RequestParam(name = "edit", required = false) Boolean edit,
+      Model model) {
+    model.addAttribute("edit", edit);
     model.addAttribute("allProducts", productService.getAllProducts());
     return "catalog";
+  }
+
+  @GetMapping("/delete/{id}")
+  public String deleteProduct(@PathVariable long id, Model model) {
+    productService.deleteProductById(id);
+    return "redirect:/api/products?edit=true";
   }
 }

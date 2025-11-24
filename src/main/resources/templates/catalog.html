@@ -11,6 +11,13 @@
       <h2>Browse our <span th:text="${#lists.size(allProducts)}">Number of Products</span>
         products
       </h2>
+      <div class="filter">
+        <a th:href="@{/api/products?color=All}"><button type="button">All</button></a>
+        <a th:href="@{/api/products?color=Blue}"><button type="button">Blue</button></a>
+        <a th:href="@{/api/products?color=Black}"><button type="button">Black</button></a>
+        <a th:href="@{/api/products?color=Brown}"><button type="button">Brown</button></a>
+        <a th:href="@{/api/products?color=Gray}"><button type="button">Gray</button></a>
+      </div>
       <table>
         <thead>
           <tr>

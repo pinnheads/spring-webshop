@@ -30,6 +30,22 @@ public class ProductService implements IProductService {
   }
 
   @Override
+  public List<Product> fetchProductsByColor(String color) {
+    switch (color) {
+      case "Black":
+        return repository.fetchAllBlack();
+      case "Blue":
+        return repository.fetchAllBlue();
+      case "Brown":
+        return repository.fetchAllBrown();
+      case "Gray":
+        return repository.fetchAllGray();
+      default:
+        return repository.findAll();
+    }
+  }
+
+  @Override
   public Optional<Product> getSingleProduct(Long id) {
     return repository.findById(id);
   }

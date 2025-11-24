@@ -3,8 +3,13 @@ package com.da.da_25_26.products;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
 
 @Entity
+@NamedQuery(name = "Product.fetchAllBlue", query = "SELECT p FROM Product p WHERE p.color = 'Blue'")
+@NamedQuery(name = "Product.fetchAllBlack", query = "SELECT p FROM  Product p WHERE p.color = 'Black'")
+@NamedQuery(name = "Product.fetchAllBrown", query = "SELECT p FROM Product p WHERE p.color = 'Brown'")
+@NamedQuery(name = "Product.fetchAllGray", query = "SELECT p FROM Product p WHERE p.color = 'Gray'")
 public class Product {
 
   @Id
@@ -24,6 +29,7 @@ public class Product {
   }
 
   public Product() {
+
   }
 
   // Getters and Setters for the private attributes

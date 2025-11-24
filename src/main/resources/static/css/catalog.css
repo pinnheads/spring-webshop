@@ -1,19 +1,4 @@
-.catalog-heading {
-  margin: 10px;
-  margin-top: 50px;
-}
-
-table {
-  width: 80%;
-  border-collapse: collapse;
-  text-align: left;
-}
-
-th {
-  font-weight: bold;
-  padding: 8px 10px;
-}
-
-td {
-  padding: 8px 10px;
+.filter {
+  display: flex: 1 1 auto;
+  padding: 20px 0;
 }

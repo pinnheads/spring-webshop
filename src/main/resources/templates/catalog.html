@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Catalog</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
-</head>
+<head th:replace="fragments/header :: header"></head>
 
 <body>
-  <header th:replace="fragments.header :: header"></header>
-  <h2 class="catalog-heading">Browse our <span th:text="${#lists.size(allProducts)}">Number of Products</span> products
-  </h2>
+  <header th:replace="fragments/navbar :: navbar"></header>
   <!-- Catalog -->
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Size</th>
-        <th>Color</th>
-        <th>Link</th>
-        <th th:if="${edit}">Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr th:each="prod: ${allProducts}">
-        <td th:text="${prod.name}">Name</td>
-        <td th:text="${#numbers.formatDecimal(prod.price, 1, 2)}">Price</td>
-        <td th:text="${prod.size}">Size</td>
-        <td th:text="${prod.color}">Color</td>
-        <td><a th:href="@{/api/products/details/{id}(id=${prod.id})}">Details</a></td>
-        <td th:if="${edit}"><a th:href="@{/api/products/delete/{id}(id=${prod.id})}">Delete</a></td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="container-wrapper">
+    <div class="container">
+      <h2>Browse our <span th:text="${#lists.size(allProducts)}">Number of Products</span>
+        products
+      </h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Size</th>
+            <th>Color</th>
+            <th>Link</th>
+            <th th:if="${edit}">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="prod: ${allProducts}">
+            <td th:text="${prod.name}">Name</td>
+            <td th:text="${#numbers.formatDecimal(prod.price, 1, 2)}">Price</td>
+            <td th:text="${prod.size}">Size</td>
+            <td th:text="${prod.color}">Color</td>
+            <td><a th:href="@{/api/products/details/{id}(id=${prod.id})}">Details</a></td>
+            <td th:if="${edit}"><a th:href="@{/api/products/delete/{id}(id=${prod.id})}">Delete</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </body>
 
 </html>

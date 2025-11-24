@@ -4,17 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IProductService {
-  List<Product> filterProductByColor(String color);
-
-  List<Product> filterProductBySize(String size);
-
-  Product createProduct(String name, String size, String color, Double price);
+  // List<Product> filterProductByColor(String color);
 
   Product addProduct(Product newProduct);
 
   List<Product> deleteProductById(Long id);
 
-  Product updateProduct(Long id, Product updatedProduct);
+  // Product updateProduct(Long id, Product updatedProduct);
 
   Optional<Product> getSingleProduct(Long id);
 

@@ -2,58 +2,40 @@ package com.da.da_25_26.products;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService implements IProductService {
 
-  @Override
-  public List<Product> filterProductByColor(String color) {
-    return Product.getProducts().stream()
-        .filter(item -> item.getColor().equalsIgnoreCase(color))
-        .collect(Collectors.toList());
-  }
+  private final ProductRepository repository;
 
-  @Override
-  public List<Product> filterProductBySize(String size) {
-    return Product.getProducts().stream()
-        .filter(item -> item.getSize().equalsIgnoreCase(size))
-        .collect(Collectors.toList());
-  }
-
-  @Override
-  public Product createProduct(String name, String size, String color, Double price) {
-    return Product.createProduct(name, size, color, price);
+  ProductService(ProductRepository repository) {
+    this.repository = repository;
   }
 
   @Override
   public Product addProduct(Product newProduct) {
-    Long newID = Product.getProducts().getLast().getId() + 1L;
-    newProduct.setId(newID);
-    return Product.addProduct(newProduct);
+    return repository.save(newProduct);
   }
 
   @Override
   public List<Product> deleteProductById(Long id) {
-    return Product.deleteProductById(id);
-  }
-
-  @Override
-  public Product updateProduct(Long id, Product updatedProduct) {
-    return Product.updateProduct(id, updatedProduct);
+    try {
+      repository.deleteById(id);
+      return getAllProducts();
+    } catch (Exception e) {
+      throw new RuntimeException("Could not find the product with ID: " + id);
+    }
   }
 
   @Override
   public Optional<Product> getSingleProduct(Long id) {
-    return Product.getProducts().stream()
-        .filter(item -> item.getId() == id)
-        .findFirst();
+    return repository.findById(id);
   }
 
   @Override
   public List<Product> getAllProducts() {
-    return Product.getProducts();
+    return repository.findAll();
   }
 }

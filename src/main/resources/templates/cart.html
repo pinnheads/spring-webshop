@@ -4,44 +4,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Catalog</title>
+  <title>Cart</title>
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
-  <header th:replace="fragments.header :: header"></header>
+  <header th:replace="fragments/navbar :: navbar"></header>
 
-  <h2>Your Shopping Cart</h2>
-  <!-- Catalog -->
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Size</th>
-        <th>Color</th>
-        <th>Quantity</th>
-        <th>Subtotal (Price X Quantity)</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr th:each="item: ${cart.products}">
-        <td th:text="${item.key.name}">Name</td>
-        <td th:text="${#numbers.formatDecimal(item.key.price, 1, 2)}">Price</td>
-        <td th:text="${item.key.size}">Size</td>
-        <td th:text="${item.key.color}">Color</td>
-        <td th:text="${item.value}">Value</td>
-        <td th:text="${#numbers.formatDecimal(item.key.price * item.value, 1, 2)}">Subtotal</td>
-        <td><a th:href="@{/api/cart/delete/{id}(id=${item.key.id})}">Delete</a></td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="container-wrapper">
+    <div class="container">
+      <h2>Your Shopping Cart</h2>
+      <!-- Catalog -->
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Size</th>
+            <th>Color</th>
+            <th>Quantity</th>
+            <th>Subtotal (Price X Quantity)</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="item: ${cart.products}">
+            <td th:text="${item.key.name}">Name</td>
+            <td th:text="${#numbers.formatDecimal(item.key.price, 1, 2)}">Price</td>
+            <td th:text="${item.key.size}">Size</td>
+            <td th:text="${item.key.color}">Color</td>
+            <td th:text="${item.value}">Value</td>
+            <td th:text="${#numbers.formatDecimal(item.key.price * item.value, 1, 2)}">Subtotal</td>
+            <td><a th:href="@{/api/cart/delete/{id}(id=${item.key.id})}">Delete</a></td>
+          </tr>
+        </tbody>
+      </table>
 
-  <div class="total">
-    <p class="heading">Total Price</p>
-    <p class="price" th:text="${#numbers.formatDecimal(cart.total, 1, 2)}">Total price</p>
+      <div class="total">
+        <p class="heading">Total Price</p>
+        <p class="price" th:text="${#numbers.formatDecimal(cart.total, 1, 2)}">Total price</p>
+      </div>
+    </div>
   </div>
 </body>
-
-</html>

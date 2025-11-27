@@ -3,8 +3,11 @@ package com.da.da_25_26.products;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 public interface IProductService {
-  List<Product> fetchProductsByColor(String color);
+  Page<Product> fetchProductsByColor(String color, Pageable pageable);
 
   Product addProduct(Product newProduct);
 
@@ -14,5 +17,5 @@ public interface IProductService {
 
   Optional<Product> getSingleProduct(Long id);
 
-  List<Product> getAllProducts();
+  Page<Product> getAllProducts(Pageable pageable);
 }

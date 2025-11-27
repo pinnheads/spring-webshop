@@ -8,7 +8,7 @@
   <!-- Catalog -->
   <div class="container-wrapper">
     <div class="container">
-      <h2>Browse our <span th:text="${#lists.size(allProducts)}">Number of Products</span>
+      <h2>Browse our <span th:text="${allProducts.totalElements}">Number of Products</span>
         products
       </h2>
       <div class="filter">
@@ -40,6 +40,15 @@
           </tr>
         </tbody>
       </table>
+      <div class="navigation">
+        <a th:href="@{/api/products/paginated?page={pageNumber}(pageNumber=${allProducts.pageable.pageNumber - 1})}"><button
+            type="button" th:unless="${allProducts.first}">Prev</button></a>
+        <a th:unless="${allProducts.last}"
+          th:href="@{/api/products/paginated?page={pageNumber}(pageNumber=${allProducts.pageable.pageNumber + 1})}"><button
+            <button type="button">Next</button></a>
+      </div>
+      <small>Page <span th:text="${allProducts.pageable.pageNumber + 1}">Current Page</span> of <span
+          th:text="${allProducts.totalPages}">Total Pages</span></small>
     </div>
   </div>
 </body>

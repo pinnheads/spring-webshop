@@ -1,15 +1,15 @@
 package com.da.da_25_26.products;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
-  List<Product> fetchAllBlack();
+  Page<Product> fetchAllBlack(Pageable pageable);
 
-  List<Product> fetchAllBrown();
+  Page<Product> fetchAllBrown(Pageable pageable);
 
-  List<Product> fetchAllBlue();
+  Page<Product> fetchAllBlue(Pageable pageable);
 
-  List<Product> fetchAllGray();
+  Page<Product> fetchAllGray(Pageable pageable);
 }

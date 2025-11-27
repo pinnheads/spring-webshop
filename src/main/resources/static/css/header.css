@@ -1,5 +1,6 @@
 .header-bar {
   background-color: #a8d4e0;
+  color: #2d3436;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,12 +11,11 @@
 .logo {
   font-weight: bold;
   font-size: 1.2rem;
-  color: #000;
 }
 
 .nav-links a {
+  color: #2d3436;
   text-decoration: underline;
-  color: #000;
   margin-left: 20px;
   font-size: 1rem;
   cursor: pointer;
@@ -23,5 +23,6 @@
 
 .nav-links a:hover{
   text-decoration: none;
+  color: #2d3436;
 }
 

@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -46,12 +44,6 @@ public class ProductController {
     return productService.getSingleProduct(reqId);
   }
 
-  @PostMapping("/create")
-  public Product createNewProduct(@RequestParam String name, @RequestParam String size, @RequestParam String color,
-      @RequestParam double price) {
-    return productService.createProduct(name, size, color, price);
-  }
-
   @PostMapping("/add")
   public Product addNewProduct(@RequestBody Product product) {
     return productService.addProduct(product);
@@ -65,25 +57,20 @@ public class ProductController {
         .body(resource);
   }
 
-  @PutMapping("/update/{id}")
-  public Product updateProduct(@PathVariable Long id, @RequestBody Product updatedProduct) {
-    return productService.updateProduct(id, updatedProduct);
-  }
+  // @PutMapping("/update/{id}")
+  // public Product updateProduct(@PathVariable Long id, @RequestBody Product
+  // updatedProduct) {
+  // return productService.updateProduct(id, updatedProduct);
+  // }
 
   @DeleteMapping("/delete/{id}")
   public List<Product> deleteProduct(@PathVariable Long id) {
     return productService.deleteProductById(id);
   }
 
-  @GetMapping("/color/{color}")
-  public List<Product> getProductsWithColor(@PathVariable String color) {
-    List<Product> colorProducts = productService.filterProductByColor(color);
-    return colorProducts;
-  }
-
-  @GetMapping("/size/{size}")
-  public List<Product> getProductsWithSize(@PathVariable String size) {
-    List<Product> sizeProducts = productService.filterProductBySize(size);
-    return sizeProducts;
-  }
+  // @GetMapping("/color/{color}")
+  // public List<Product> getProductsWithColor(@PathVariable String color) {
+  // List<Product> colorProducts = productService.filterProductByColor(color);
+  // return colorProducts;
+  // }
 }

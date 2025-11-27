@@ -23,9 +23,10 @@ public class ProductCatalogController {
 
   @GetMapping("")
   public String allProducts(@RequestParam(name = "edit", required = false) Boolean edit,
+      @RequestParam(name = "color", required = false, defaultValue = "All") String color,
       Model model) {
     model.addAttribute("edit", edit);
-    model.addAttribute("allProducts", productService.getAllProducts());
+    model.addAttribute("allProducts", productService.fetchProductsByColor(color));
     return "catalog";
   }
 

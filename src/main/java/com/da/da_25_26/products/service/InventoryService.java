@@ -1,20 +1,23 @@
 package com.da.da_25_26.products.service;
 
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.da.da_25_26.products.Product;
+import com.da.da_25_26.products.ProductRepository;
+
 @Service
 public class InventoryService {
   private final Map<Long, Integer> inventory = new HashMap<>();
 
-  public InventoryService() {
-    inventory.put(1L, 10);
-    inventory.put(2L, 30);
-    inventory.put(3L, 40);
-    inventory.put(4L, 20);
-    inventory.put(5L, 60);
+  public InventoryService(ProductRepository repository) {
+    List<Product> allProducts = repository.findAll();
+    for (Product product : allProducts) {
+      inventory.put(product.getId(), (int) (Math.random() * 50) + 1);
+    }
   }
 
   public int getStockForProductId(Long productId) {

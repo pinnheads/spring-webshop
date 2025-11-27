@@ -4,25 +4,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Details</title>
+  <title th:text="${productDetailDTO.product.name}">Details</title>
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
-  <header th:replace="fragments.header :: header"></header>
+  <header th:replace="fragments/navbar :: navbar"></header>
 
-  <div class="details">
-    <h2 class="product-name">Product: <span th:text="${productDetailDTO.product.name}">Name</span></h2>
-    <p class="product-size">Size: <span th:text="${productDetailDTO.product.size}">Size</span></p>
-    <p class="product-color">Color: <span th:text="${productDetailDTO.product.color}">Color</span></p>
-    <p class="product-inventory" th:unless="${productDetailDTO.isSoldOut}">Stock: <span
-        th:text="${productDetailDTO.stockCount}">Color</span></p>
-    <p class="product-inventory" th:if="${productDetailDTO.isSoldOut}">SOLD OUT</p>
-    <p class="product-price">Price: $<span
-        th:text="${#numbers.formatDecimal(productDetailDTO.product.price, 1, 2)}">Price</span></p>
-    <button th:unless="${productDetailDTO.isSoldOut}" type="button"><a
-        th:href="@{/api/cart/add/{id}(id=${productDetailDTO.product.id})}">Add to cart</a></button>
-  </div>
+  <div class="container-wrapper">
+    <div class="details container">
+      <h2 class="product-name">Product: <span th:text="${productDetailDTO.product.name}">Name</span></h2>
+      <p class="product-size">Size: <span th:text="${productDetailDTO.product.size}">Size</span></p>
+      <p class="product-color">Color: <span th:text="${productDetailDTO.product.color}">Color</span></p>
+      <p class="product-inventory" th:unless="${productDetailDTO.isSoldOut}">Stock: <span
+          th:text="${productDetailDTO.stockCount}">Color</span></p>
+      <p class="product-inventory" th:if="${productDetailDTO.isSoldOut}">SOLD OUT</p>
+      <p class="product-price">Price: $<span
+          th:text="${#numbers.formatDecimal(productDetailDTO.product.price, 1, 2)}">Price</span></p>
+      <a th:href="@{/api/cart/add/{id}(id=${productDetailDTO.product.id})}">
+        <button th:unless="${productDetailDTO.isSoldOut}" type="button">Add to cart</button>
+      </a>
+    </div>
 </body>
 
 </html>

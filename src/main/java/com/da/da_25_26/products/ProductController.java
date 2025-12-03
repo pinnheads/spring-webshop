@@ -3,6 +3,9 @@ package com.da.da_25_26.products;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,8 +38,8 @@ public class ProductController {
   }
 
   @GetMapping("")
-  public List<Product> getAllProducts() {
-    return productService.getAllProducts();
+  public Page<Product> getAllProducts(@PageableDefault(size = 3) Pageable pageable) {
+    return productService.getAllProducts(pageable);
   }
 
   @GetMapping("/{reqId}")

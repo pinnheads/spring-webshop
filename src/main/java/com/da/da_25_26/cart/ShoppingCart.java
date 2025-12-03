@@ -1,5 +1,6 @@
 package com.da.da_25_26.cart;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,27 +10,37 @@ public class ShoppingCart {
   public Map<Product, Integer> products = new HashMap<>();
 
   public void addProduct(Product product) {
-    if (products.containsKey(product)) {
-      products.put(product, products.get(product) + 1);
+    Product keyInMap = products.keySet().stream()
+        .filter(p -> p.getId() == product.getId())
+        .findFirst().orElse(null);
+    if (keyInMap != null) {
+      products.put(keyInMap, products.get(keyInMap) + 1);
     } else {
       products.put(product, 1);
     }
   }
 
   public void removeProduct(Product product) {
-    if (products.containsKey(product)) {
-      int currentQuantity = products.get(product);
+    Product keyInMap = products.keySet().stream()
+        .filter(p -> p.getId() == product.getId())
+        .findFirst().orElse(null);
+    if (keyInMap != null) {
+      int currentQuantity = products.get(keyInMap);
       if (currentQuantity > 1) {
-        products.put(product, products.get(product) - 1);
+        products.put(keyInMap, products.get(keyInMap) - 1);
       } else {
-        products.remove(product);
+        products.remove(keyInMap);
       }
     }
   }
 
-  public Double getTotal() {
+  public BigDecimal getTotal() {
     return products.entrySet().stream()
-        .mapToDouble(entry -> entry.getKey().getPrice() * entry.getValue())
-        .sum();
+        .map(entry -> {
+          BigDecimal price = entry.getKey().getPrice();
+          BigDecimal quantity = BigDecimal.valueOf(entry.getValue());
+          return price.multiply(quantity);
+        })
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
   }
 }

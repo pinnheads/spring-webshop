@@ -1,5 +1,7 @@
 package com.da.da_25_26.products;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -30,7 +32,7 @@ public class Product {
   /*
    * The unit price for the product
    */
-  private double price;
+  private BigDecimal price;
   /*
    * The physical size for the product
    */
@@ -40,7 +42,7 @@ public class Product {
    */
   private String color;
 
-  Product(String name, double price, String size, String color) {
+  Product(String name, BigDecimal price, String size, String color) {
     this.name = name;
     this.price = price;
     this.size = size;
@@ -68,11 +70,11 @@ public class Product {
     this.name = name;
   }
 
-  public double getPrice() {
+  public BigDecimal getPrice() {
     return price;
   }
 
-  public void setPrice(double price) {
+  public void setPrice(BigDecimal price) {
     this.price = price;
   }
 

@@ -43,12 +43,11 @@
       <div class="navigation">
         <a th:href="@{/api/products/paginated?page={pageNumber}(pageNumber=${allProducts.pageable.pageNumber - 1})}"><button
             type="button" th:unless="${allProducts.first}">Prev</button></a>
-        <a th:unless="${allProducts.last}"
-          th:href="@{/api/products/paginated?page={pageNumber}(pageNumber=${allProducts.pageable.pageNumber + 1})}"><button
-            <button type="button">Next</button></a>
+        <small>Page <span th:text="${allProducts.pageable.pageNumber + 1}">Current Page</span> of <span
+            th:text="${allProducts.totalPages}">Total Pages</span></small>
+        <a th:href="@{/api/products/paginated?page={pageNumber}(pageNumber=${allProducts.pageable.pageNumber + 1})}"><button
+            <button th:unless="${allProducts.last}" type="button">Next</button></a>
       </div>
-      <small>Page <span th:text="${allProducts.pageable.pageNumber + 1}">Current Page</span> of <span
-          th:text="${allProducts.totalPages}">Total Pages</span></small>
     </div>
   </div>
 </body>

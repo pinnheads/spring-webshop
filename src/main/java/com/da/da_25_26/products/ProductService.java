@@ -3,6 +3,8 @@ package com.da.da_25_26.products;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,25 +25,25 @@ public class ProductService implements IProductService {
   public List<Product> deleteProductById(Long id) {
     try {
       repository.deleteById(id);
-      return getAllProducts();
+      return repository.findAll();
     } catch (Exception e) {
       throw new RuntimeException("Could not find the product with ID: " + id);
     }
   }
 
   @Override
-  public List<Product> fetchProductsByColor(String color) {
+  public Page<Product> fetchProductsByColor(String color, Pageable pageable) {
     switch (color) {
       case "Black":
-        return repository.fetchAllBlack();
+        return repository.fetchAllBlack(pageable);
       case "Blue":
-        return repository.fetchAllBlue();
+        return repository.fetchAllBlue(pageable);
       case "Brown":
-        return repository.fetchAllBrown();
+        return repository.fetchAllBrown(pageable);
       case "Gray":
-        return repository.fetchAllGray();
+        return repository.fetchAllGray(pageable);
       default:
-        return repository.findAll();
+        return repository.findAll(pageable);
     }
   }
 
@@ -51,7 +53,7 @@ public class ProductService implements IProductService {
   }
 
   @Override
-  public List<Product> getAllProducts() {
-    return repository.findAll();
+  public Page<Product> getAllProducts(Pageable pageable) {
+    return repository.findAll(pageable);
   }
 }

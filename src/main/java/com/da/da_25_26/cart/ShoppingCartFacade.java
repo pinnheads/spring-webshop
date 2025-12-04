@@ -5,6 +5,20 @@ import org.springframework.stereotype.Service;
 
 import com.da.da_25_26.products.service.InventoryService;
 
+/**
+ * **Purpose**
+ * Facade service the coordinates interaction between the shopping cart and
+ * inventroy service.
+ *
+ * **Requirements**
+ * {@link IShoppingCartService}: Manages the session related cart instance.
+ * {@link InventoryService}: Manages the stock levels.
+ *
+ * **Capabilities**
+ * Retrieves the current state of the user's shoppping cart
+ * addition of items - decrements inventory, updates cart
+ * removal of items - increments inventory, updates cart
+ */
 @Service
 public class ShoppingCartFacade {
   private IShoppingCartService shoppingCartService;

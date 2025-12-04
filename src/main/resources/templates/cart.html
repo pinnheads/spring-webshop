@@ -15,7 +15,7 @@
     <div class="container">
       <h2>Your Shopping Cart</h2>
       <!-- Catalog -->
-      <table>
+      <table th:if="${cart.total != 0.00}">
         <thead>
           <tr>
             <th>Name</th>
@@ -40,9 +40,12 @@
         </tbody>
       </table>
 
-      <div class="total">
+      <div th:if="${cart.total != 0.00}" class="total">
         <p class="heading">Total Price</p>
         <p class="price" th:text="${#numbers.formatDecimal(cart.total, 1, 2)}">Total price</p>
+      </div>
+      <div th:if="${cart.total == 0.00}">
+        <p>Add some items to the cart to view them here!!</p>
       </div>
     </div>
   </div>

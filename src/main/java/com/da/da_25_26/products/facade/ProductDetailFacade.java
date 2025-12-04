@@ -10,6 +10,19 @@ import com.da.da_25_26.products.Product;
 import com.da.da_25_26.products.ProductDetailDTO;
 import com.da.da_25_26.products.service.InventoryService;
 
+/**
+ * **Purpose**
+ * Facade service to retrieve detailed product information with inventory data
+ *
+ * **Requirements**
+ * {@link IProductService}: Source for static product details
+ * {@link InventoryService}: Source for real time stock availability
+ *
+ * **Capabilities**
+ * Fetches a product by ID and populates the current stock levels
+ * Handles product not found scenarios by validating ID existence before
+ * fetching stock.
+ */
 @Service
 public class ProductDetailFacade {
   private IProductService productService;

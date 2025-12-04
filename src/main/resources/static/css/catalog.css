@@ -1,4 +1,11 @@
 .filter {
-  display: flex: 1 1 auto;
+  display: flex 1 1 auto;
   padding: 20px 0;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }

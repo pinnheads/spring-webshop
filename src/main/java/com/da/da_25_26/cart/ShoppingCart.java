@@ -4,10 +4,13 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.da.da_25_26.products.PriceCalculationService;
 import com.da.da_25_26.products.Product;
 
 public class ShoppingCart {
   public Map<Product, Integer> products = new HashMap<>();
+
+  private final PriceCalculationService priceCalculationService = new PriceCalculationService();
 
   public void addProduct(Product product) {
     Product keyInMap = products.keySet().stream()
@@ -37,7 +40,7 @@ public class ShoppingCart {
   public BigDecimal getTotal() {
     return products.entrySet().stream()
         .map(entry -> {
-          BigDecimal price = entry.getKey().getPrice();
+          BigDecimal price = priceCalculationService.roundPrice(entry.getKey().getPrice());
           BigDecimal quantity = BigDecimal.valueOf(entry.getValue());
           return price.multiply(quantity);
         })

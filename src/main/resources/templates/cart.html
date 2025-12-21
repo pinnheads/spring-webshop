@@ -14,7 +14,7 @@
   <div class="container-wrapper">
     <div class="container">
       <h2>Your Shopping Cart</h2>
-      <!-- Catalog -->
+      <!-- NOTE: Shows up only when there are items in the cart -->
       <div th:if="${cart.total != 0.00}">
         <table>
           <thead>
@@ -41,15 +41,27 @@
           </tbody>
         </table>
         <form class="voucher-form">
-          <input type="checkbox" id="voucher"></input>
-          <label for="voucher"><small>Apply 10% Voucher</small></label>
+          <input type="checkbox" id="voucher" th:checked="${cart.voucherApplied}"
+            onchange="window.location.href='/api/cart?voucher=' + this.checked"></input>
+          <label th:if="${!cart.voucherApplied}" for="voucher"><small>Apply <span
+                th:text="${voucherPercentage}"></span>% Voucher</small></label>
+          <label th:if="${cart.voucherApplied}" for="voucher"><small style="color: green;">Applied <span
+                th:text="${voucherPercentage}"></span>% Voucher</small></label>
         </form>
+        <div class="total">
+          <p th:if="${cart.voucherApplied}">Original Price: <s th:text="${cart.originalTotalPrice}"></s>
+          </p>
+          <div class="total-price">
+            <p class="heading">Total</p>
+            <p class="price" th:text="${#numbers.formatDecimal(cart.total, 1, 2)}">Total price</p>
+          </div>
+        </div>
+
+
+
       </div>
 
-      <div th:if="${cart.total != 0.00}" class="total">
-        <p class="heading">Total Price</p>
-        <p class="price" th:text="${#numbers.formatDecimal(cart.total, 1, 2)}">Total price</p>
-      </div>
+      <!-- NOTE: Shows up only when there are no items in the cart -->
       <div th:if="${cart.total == 0.00}">
         <p>Add some items to the cart to view them here!!</p>
       </div>

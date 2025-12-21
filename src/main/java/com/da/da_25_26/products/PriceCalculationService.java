@@ -21,6 +21,7 @@ public class PriceCalculationService {
 
   private final BigDecimal eurToDollarRate = BigDecimal.valueOf(1.17);
   private final BigDecimal dollarToEurRate = BigDecimal.valueOf(0.85);
+  private static final BigDecimal VOUCHER_DISCOUNT_PERCENTAGE = new BigDecimal("0.10");
 
   private static final int digits = 2;
 
@@ -44,7 +45,12 @@ public class PriceCalculationService {
     }
   }
 
-  public BigDecimal applyVoucher(BigDecimal amount, BigDecimal percentageVoucher) {
-    return amount.multiply(percentageVoucher.divide(BigDecimal.valueOf(100.00)));
+  public BigDecimal applyVoucher(BigDecimal currentTotal) {
+    BigDecimal discount = currentTotal.multiply(VOUCHER_DISCOUNT_PERCENTAGE);
+    return currentTotal.subtract(discount);
+  }
+
+  public int getVoucherPercentage() {
+    return VOUCHER_DISCOUNT_PERCENTAGE.multiply(new BigDecimal("100")).intValue();
   }
 }

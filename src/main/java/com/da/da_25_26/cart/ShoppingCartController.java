@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/api/cart")
@@ -19,7 +20,15 @@ public class ShoppingCartController {
   }
 
   @GetMapping("")
-  public String getShoppingCart(Model model) {
+  public String getShoppingCart(Model model, @RequestParam(required = false) Boolean voucher) {
+    if (voucher != null) {
+      if (voucher) {
+        shoppingCartFacade.applyVoucher();
+      } else {
+        shoppingCartFacade.removeVoucher();
+      }
+    }
+    model.addAttribute("voucherPercentage", shoppingCartFacade.getVoucherPercentage());
     model.addAttribute("cart", shoppingCartFacade.getCart());
     return "cart";
   }

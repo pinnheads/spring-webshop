@@ -30,6 +30,18 @@ public class ShoppingCartFacade {
     this.inventoryService = inventoryService;
   }
 
+  public int getVoucherPercentage() {
+    return shoppingCartService.getVoucherPercentage();
+  }
+
+  public void applyVoucher() {
+    shoppingCartService.applyVoucher();
+  }
+
+  public void removeVoucher() {
+    shoppingCartService.removeVoucher();
+  }
+
   public ShoppingCart getCart() {
     return shoppingCartService.getShoppingCart();
   }

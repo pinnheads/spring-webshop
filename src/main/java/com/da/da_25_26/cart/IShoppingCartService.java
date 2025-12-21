@@ -7,6 +7,10 @@ public interface IShoppingCartService {
 
   void removeVoucher();
 
+  String getCurrency();
+
+  void setCurrency(String currency);
+
   ShoppingCart getShoppingCart();
 
   void addProductToCart(Long productId);

@@ -55,6 +55,9 @@
             <p class="heading">Total</p>
             <p class="price" th:text="${#numbers.formatDecimal(cart.total, 1, 2)}">Total price</p>
           </div>
+          <!-- TODO: Implement currency conversion -->
+          <hr>
+          <small><i>Prices are displayed in <a href=""><span th:text="${currency}"></span></a></i></small>
         </div>
 
 

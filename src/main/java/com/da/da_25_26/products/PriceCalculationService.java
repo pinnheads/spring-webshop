@@ -3,6 +3,7 @@ package com.da.da_25_26.products;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,8 +23,21 @@ public class PriceCalculationService {
   private final BigDecimal eurToDollarRate = BigDecimal.valueOf(1.17);
   private final BigDecimal dollarToEurRate = BigDecimal.valueOf(0.85);
   private static final BigDecimal VOUCHER_DISCOUNT_PERCENTAGE = new BigDecimal("0.10");
+  private String currentCurrency;
 
   private static final int digits = 2;
+
+  public PriceCalculationService(@Value("${app.currency.default}") String defaultCurrency) {
+    this.currentCurrency = defaultCurrency;
+  }
+
+  public String getCurrentCurrency() {
+    return this.currentCurrency;
+  }
+
+  public void setCurrentCurrency(String currency) {
+    this.currentCurrency = currency;
+  }
 
   public BigDecimal roundPrice(BigDecimal price) {
     if (price == null) {

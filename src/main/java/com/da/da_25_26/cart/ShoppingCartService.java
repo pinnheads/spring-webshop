@@ -41,6 +41,14 @@ public class ShoppingCartService implements IShoppingCartService {
     }
   }
 
+  public String getCurrency() {
+    return priceCalculationService.getCurrentCurrency();
+  }
+
+  public void setCurrency(String currency) {
+    priceCalculationService.setCurrentCurrency(currency);
+  }
+
   public ShoppingCart getShoppingCart() {
     return this.shoppingCart;
   }

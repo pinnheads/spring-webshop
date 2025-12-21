@@ -4,16 +4,14 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.da.da_25_26.products.PriceCalculationService;
 import com.da.da_25_26.products.Product;
 
 public class ShoppingCart {
   public Map<Product, Integer> products = new HashMap<>();
 
-  private final PriceCalculationService priceCalculationService = new PriceCalculationService();
   private boolean voucherApplied = false;
   private BigDecimal originalTotalPrice;
-  private BigDecimal cartTotal = BigDecimal.valueOf(1.00);
+  private BigDecimal cartTotal = BigDecimal.valueOf(0.00);
 
   public boolean isVoucherApplied() {
     return this.voucherApplied;

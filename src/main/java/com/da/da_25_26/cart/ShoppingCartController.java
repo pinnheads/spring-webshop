@@ -28,6 +28,7 @@ public class ShoppingCartController {
         shoppingCartFacade.removeVoucher();
       }
     }
+    model.addAttribute("currency", shoppingCartFacade.getCurrency());
     model.addAttribute("voucherPercentage", shoppingCartFacade.getVoucherPercentage());
     model.addAttribute("cart", shoppingCartFacade.getCart());
     return "cart";

@@ -30,6 +30,14 @@ public class ShoppingCartFacade {
     this.inventoryService = inventoryService;
   }
 
+  public String getCurrency() {
+    return shoppingCartService.getCurrency();
+  }
+
+  public void setCurrency(String currency) {
+    shoppingCartService.setCurrency(currency);
+  }
+
   public int getVoucherPercentage() {
     return shoppingCartService.getVoucherPercentage();
   }

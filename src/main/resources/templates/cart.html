@@ -15,30 +15,36 @@
     <div class="container">
       <h2>Your Shopping Cart</h2>
       <!-- Catalog -->
-      <table th:if="${cart.total != 0.00}">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Size</th>
-            <th>Color</th>
-            <th>Quantity</th>
-            <th>Subtotal (Price X Quantity)</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="item: ${cart.products}">
-            <td th:text="${item.key.name}">Name</td>
-            <td th:text="${#numbers.formatDecimal(item.key.price, 1, 2)}">Price</td>
-            <td th:text="${item.key.size}">Size</td>
-            <td th:text="${item.key.color}">Color</td>
-            <td th:text="${item.value}">Value</td>
-            <td th:text="${#numbers.formatDecimal(item.key.price * item.value, 1, 2)}">Subtotal</td>
-            <td><a th:href="@{/api/cart/delete/{id}(id=${item.key.id})}">Delete</a></td>
-          </tr>
-        </tbody>
-      </table>
+      <div th:if="${cart.total != 0.00}">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Size</th>
+              <th>Color</th>
+              <th>Quantity</th>
+              <th>Subtotal (Price X Quantity)</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="item: ${cart.products}">
+              <td th:text="${item.key.name}">Name</td>
+              <td th:text="${#numbers.formatDecimal(item.key.price, 1, 2)}">Price</td>
+              <td th:text="${item.key.size}">Size</td>
+              <td th:text="${item.key.color}">Color</td>
+              <td th:text="${item.value}">Value</td>
+              <td th:text="${#numbers.formatDecimal(item.key.price * item.value, 1, 2)}">Subtotal</td>
+              <td><a th:href="@{/api/cart/delete/{id}(id=${item.key.id})}">Delete</a></td>
+            </tr>
+          </tbody>
+        </table>
+        <form class="voucher-form">
+          <input type="checkbox" id="voucher"></input>
+          <label for="voucher"><small>Apply 10% Voucher</small></label>
+        </form>
+      </div>
 
       <div th:if="${cart.total != 0.00}" class="total">
         <p class="heading">Total Price</p>

@@ -21,3 +21,14 @@
   margin-bottom: 0;
   font-size: 1.2rem;
 }
+
+.voucher-form {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.voucher-form input {
+  width: auto;
+  margin-bottom: 0;
+}

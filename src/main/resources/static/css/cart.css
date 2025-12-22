@@ -1,10 +1,21 @@
 .total {
-  margin: 20px 10px;
   background-color: #a8d4e0;
+  min-height: 140px;
   padding: 15px 10px;
   border: solid;
   border-color: black;
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.total p {
+  margin-bottom: 0;
+}
+
+.total-price {
   display: flex;
   justify-content: end;
   align-items: center;
@@ -20,4 +31,15 @@
   margin-left: 10px;
   margin-bottom: 0;
   font-size: 1.2rem;
+}
+
+.voucher-form {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.voucher-form input {
+  width: auto;
+  margin-bottom: 0;
 }

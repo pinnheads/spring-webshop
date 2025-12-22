@@ -14,36 +14,64 @@
   <div class="container-wrapper">
     <div class="container">
       <h2>Your Shopping Cart</h2>
-      <!-- Catalog -->
-      <table th:if="${cart.total != 0.00}">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Size</th>
-            <th>Color</th>
-            <th>Quantity</th>
-            <th>Subtotal (Price X Quantity)</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="item: ${cart.products}">
-            <td th:text="${item.key.name}">Name</td>
-            <td th:text="${#numbers.formatDecimal(item.key.price, 1, 2)}">Price</td>
-            <td th:text="${item.key.size}">Size</td>
-            <td th:text="${item.key.color}">Color</td>
-            <td th:text="${item.value}">Value</td>
-            <td th:text="${#numbers.formatDecimal(item.key.price * item.value, 1, 2)}">Subtotal</td>
-            <td><a th:href="@{/api/cart/delete/{id}(id=${item.key.id})}">Delete</a></td>
-          </tr>
-        </tbody>
-      </table>
+      <!-- NOTE: Shows up only when there are items in the cart -->
+      <div th:if="${cart.total != 0.00}">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Size</th>
+              <th>Color</th>
+              <th>Quantity</th>
+              <th>Subtotal (Price X Quantity)</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="item: ${cart.products}">
+              <td th:text="${item.key.name}">Name</td>
+              <td th:text="${#numbers.formatDecimal(item.key.price, 1, 2)}">Price</td>
+              <td th:text="${item.key.size}">Size</td>
+              <td th:text="${item.key.color}">Color</td>
+              <td th:text="${item.value}">Value</td>
+              <td th:text="${#numbers.formatDecimal(item.key.price * item.value, 1, 2)}">Subtotal</td>
+              <td><a th:href="@{/api/cart/delete/{id}(id=${item.key.id})}">Delete</a></td>
+            </tr>
+          </tbody>
+        </table>
+        <form class="voucher-form">
+          <input type="checkbox" id="voucher" th:checked="${cart.voucherApplied}"
+            onchange="window.location.href='/api/cart?voucher=' + this.checked"></input>
+          <label th:if="${!cart.voucherApplied}" for="voucher"><small>Apply <span
+                th:text="${voucherPercentage}"></span>% Voucher</small></label>
+          <label th:if="${cart.voucherApplied}" for="voucher"><small style="color: green;">Applied <span
+                th:text="${voucherPercentage}"></span>% Voucher</small></label>
+        </form>
+        <div class="total">
+          <p th:if="${cart.voucherApplied}">Original Price: <s th:text="${cart.originalTotalPrice}"></s>
+          </p>
+          <div class="total-price">
+            <p class="heading">Total</p>
+            <p class="price" th:text="${#numbers.formatDecimal(cart.total, 1, 2)}">Total price</p>
+          </div>
+          <!-- TODO: Implement currency conversion -->
+          <hr>
+          <small><i>Prices are displayed in
+              <a th:if="${currency.name() == 'EURO'}"
+                th:href="@{/api/cart(currency='DOLLAR', voucher=${cart.voucherApplied})}"><span
+                  th:text="${currency.name()}"></span></a>
+              <a th:if="${currency.name() == 'DOLLAR'}"
+                th:href="@{/api/cart(currency='EURO', voucher=${cart.voucherApplied})}"><span
+                  th:text="${currency.name()}"></span></a>
+            </i></small>
+        </div>
 
-      <div th:if="${cart.total != 0.00}" class="total">
-        <p class="heading">Total Price</p>
-        <p class="price" th:text="${#numbers.formatDecimal(cart.total, 1, 2)}">Total price</p>
+
+
       </div>
+
+      <!-- NOTE: Shows up only when there are no items in the cart -->
       <div th:if="${cart.total == 0.00}">
         <p>Add some items to the cart to view them here!!</p>
       </div>

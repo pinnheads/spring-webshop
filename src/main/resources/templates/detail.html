@@ -19,7 +19,7 @@
       <p class="product-inventory" th:unless="${productDetailDTO.isSoldOut}">Stock: <span
           th:text="${productDetailDTO.stockCount}">Color</span></p>
       <p class="product-inventory" th:if="${productDetailDTO.isSoldOut}">SOLD OUT</p>
-      <p class="product-price">Price: $<span
+      <p class="product-price">Price: <span
           th:text="${#numbers.formatDecimal(productDetailDTO.product.price, 1, 2)}">Price</span></p>
       <a th:href="@{/api/cart/add/{id}(id=${productDetailDTO.product.id})}">
         <button th:unless="${productDetailDTO.isSoldOut}" type="button">Add to cart</button>

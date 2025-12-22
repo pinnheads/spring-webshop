@@ -3,6 +3,7 @@ package com.da.da_25_26.cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.da.da_25_26.products.PriceCalculationService.Currency;
 import com.da.da_25_26.products.service.InventoryService;
 
 /**
@@ -30,7 +31,7 @@ public class ShoppingCartFacade {
     this.inventoryService = inventoryService;
   }
 
-  public String getCurrency() {
+  public Currency getCurrency() {
     return shoppingCartService.getCurrency();
   }
 

@@ -57,7 +57,14 @@
           </div>
           <!-- TODO: Implement currency conversion -->
           <hr>
-          <small><i>Prices are displayed in <a href=""><span th:text="${currency}"></span></a></i></small>
+          <small><i>Prices are displayed in
+              <a th:if="${currency.name() == 'EURO'}"
+                th:href="@{/api/cart(currency='DOLLAR', voucher=${cart.voucherApplied})}"><span
+                  th:text="${currency.name()}"></span></a>
+              <a th:if="${currency.name() == 'DOLLAR'}"
+                th:href="@{/api/cart(currency='EURO', voucher=${cart.voucherApplied})}"><span
+                  th:text="${currency.name()}"></span></a>
+            </i></small>
         </div>
 
 

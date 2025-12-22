@@ -5,11 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.da.da_25_26.products.Product;
+import com.da.da_25_26.products.PriceCalculationService.Currency;
 
 public class ShoppingCart {
   public Map<Product, Integer> products = new HashMap<>();
 
   private boolean voucherApplied = false;
+  private Currency currentCurrency = Currency.EURO;
   private BigDecimal originalTotalPrice;
   private BigDecimal cartTotal = BigDecimal.valueOf(0.00);
 
@@ -19,6 +21,14 @@ public class ShoppingCart {
 
   public void setVoucherApplied(boolean voucherApplied) {
     this.voucherApplied = voucherApplied;
+  }
+
+  public Currency getCurrentCurrency() {
+    return currentCurrency;
+  }
+
+  public void setCurrentCurrency(Currency currentCurrency) {
+    this.currentCurrency = currentCurrency;
   }
 
   public BigDecimal getOriginalTotalPrice() {

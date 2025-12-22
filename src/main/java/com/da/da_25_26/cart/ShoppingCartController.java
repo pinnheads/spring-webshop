@@ -20,7 +20,8 @@ public class ShoppingCartController {
   }
 
   @GetMapping("")
-  public String getShoppingCart(Model model, @RequestParam(required = false) Boolean voucher) {
+  public String getShoppingCart(Model model, @RequestParam(required = false) Boolean voucher,
+      @RequestParam(required = false, defaultValue = "EURO") String currency) {
     if (voucher != null) {
       if (voucher) {
         shoppingCartFacade.applyVoucher();
@@ -28,6 +29,11 @@ public class ShoppingCartController {
         shoppingCartFacade.removeVoucher();
       }
     }
+
+    if (currency != null && !currency.isEmpty()) {
+      shoppingCartFacade.setCurrency(currency);
+    }
+
     model.addAttribute("currency", shoppingCartFacade.getCurrency());
     model.addAttribute("voucherPercentage", shoppingCartFacade.getVoucherPercentage());
     model.addAttribute("cart", shoppingCartFacade.getCart());

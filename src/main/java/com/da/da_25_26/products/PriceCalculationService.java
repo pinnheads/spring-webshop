@@ -23,20 +23,16 @@ public class PriceCalculationService {
   private final BigDecimal eurToDollarRate = BigDecimal.valueOf(1.17);
   private final BigDecimal dollarToEurRate = BigDecimal.valueOf(0.85);
   private static final BigDecimal VOUCHER_DISCOUNT_PERCENTAGE = new BigDecimal("0.10");
-  private String currentCurrency;
 
   private static final int digits = 2;
+  private final String defaultCurrency;
 
   public PriceCalculationService(@Value("${app.currency.default}") String defaultCurrency) {
-    this.currentCurrency = defaultCurrency;
+    this.defaultCurrency = defaultCurrency;
   }
 
-  public String getCurrentCurrency() {
-    return this.currentCurrency;
-  }
-
-  public void setCurrentCurrency(String currency) {
-    this.currentCurrency = currency;
+  public Currency getDefaultCurrency() {
+    return Currency.valueOf(this.defaultCurrency);
   }
 
   public BigDecimal roundPrice(BigDecimal price) {
@@ -52,11 +48,20 @@ public class PriceCalculationService {
   }
 
   public BigDecimal convertToCurrency(BigDecimal amount, Currency fromCurrency, Currency toCurrency) {
-    if (fromCurrency == Currency.EURO) {
+    if (amount == null)
+      return BigDecimal.ZERO;
+
+    if (fromCurrency == toCurrency) {
+      return roundPrice(amount);
+    }
+
+    if (fromCurrency == Currency.EURO && toCurrency == Currency.DOLLAR) {
       return amount.multiply(eurToDollarRate);
-    } else {
+    } else if (fromCurrency == Currency.DOLLAR && toCurrency == Currency.EURO) {
       return amount.multiply(dollarToEurRate);
     }
+
+    return roundPrice(amount);
   }
 
   public BigDecimal applyVoucher(BigDecimal currentTotal) {

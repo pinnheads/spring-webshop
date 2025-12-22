@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.da.da_25_26.products.IProductService;
 import com.da.da_25_26.products.PriceCalculationService;
 import com.da.da_25_26.products.Product;
+import com.da.da_25_26.products.PriceCalculationService.Currency;
 
 @Service
 public class ShoppingCartService implements IShoppingCartService {
@@ -41,12 +42,21 @@ public class ShoppingCartService implements IShoppingCartService {
     }
   }
 
-  public String getCurrency() {
-    return priceCalculationService.getCurrentCurrency();
+  public Currency getCurrency() {
+    if (shoppingCart.getCurrentCurrency() != null) {
+      return shoppingCart.getCurrentCurrency();
+    }
+    return priceCalculationService.getDefaultCurrency();
   }
 
   public void setCurrency(String currency) {
-    priceCalculationService.setCurrentCurrency(currency);
+    try {
+      Currency newCurrency = Currency.valueOf(currency);
+      shoppingCart.setCurrentCurrency(newCurrency);
+      refershTotals();
+    } catch (IllegalArgumentException e) {
+      System.err.println("Invalid Currency: " + currency);
+    }
   }
 
   public ShoppingCart getShoppingCart() {
@@ -54,20 +64,33 @@ public class ShoppingCartService implements IShoppingCartService {
   }
 
   public void refershTotals() {
-    BigDecimal rawTotal = this.shoppingCart.getProducts().entrySet().stream()
+    BigDecimal rawTotalEur = this.shoppingCart.getProducts().entrySet().stream()
         .map(entry -> {
-          BigDecimal price = priceCalculationService.roundPrice(entry.getKey().getPrice());
+          BigDecimal price = entry.getKey().getPrice();
           BigDecimal quantity = BigDecimal.valueOf(entry.getValue());
           return price.multiply(quantity);
         }).reduce(BigDecimal.ZERO, BigDecimal::add);
 
+    BigDecimal finalTotalEur;
+
     if (this.shoppingCart.isVoucherApplied()) {
-      shoppingCart.setOriginalTotalPrice(rawTotal);
-      BigDecimal discountedTotal = priceCalculationService.applyVoucher(rawTotal);
-      shoppingCart.setTotal(discountedTotal);
+      shoppingCart.setOriginalTotalPrice(rawTotalEur); // Temp store as Euro
+      finalTotalEur = priceCalculationService.applyVoucher(rawTotalEur);
     } else {
-      shoppingCart.setTotal(rawTotal);
       shoppingCart.setOriginalTotalPrice(null);
+      finalTotalEur = rawTotalEur;
+    }
+
+    Currency targetCurrency = shoppingCart.getCurrentCurrency();
+
+    BigDecimal convertedTotal = priceCalculationService.convertToCurrency(
+        finalTotalEur, Currency.EURO, targetCurrency);
+    shoppingCart.setTotal(convertedTotal);
+
+    if (shoppingCart.getOriginalTotalPrice() != null) {
+      BigDecimal convertedOriginal = priceCalculationService.convertToCurrency(
+          shoppingCart.getOriginalTotalPrice(), Currency.EURO, targetCurrency);
+      shoppingCart.setOriginalTotalPrice(priceCalculationService.roundPrice(convertedOriginal));
     }
   }
 

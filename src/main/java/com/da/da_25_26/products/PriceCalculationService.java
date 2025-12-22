@@ -22,13 +22,15 @@ public class PriceCalculationService {
 
   private final BigDecimal eurToDollarRate = BigDecimal.valueOf(1.17);
   private final BigDecimal dollarToEurRate = BigDecimal.valueOf(0.85);
-  private static final BigDecimal VOUCHER_DISCOUNT_PERCENTAGE = new BigDecimal("0.10");
+  private final BigDecimal VOUCHER_DISCOUNT_PERCENTAGE;
 
   private static final int digits = 2;
   private final String defaultCurrency;
 
-  public PriceCalculationService(@Value("${app.currency.default}") String defaultCurrency) {
+  public PriceCalculationService(@Value("${app.currency.default}") String defaultCurrency,
+      @Value("${app.discount.percentage:0.10}") double discountPercentage) {
     this.defaultCurrency = defaultCurrency;
+    this.VOUCHER_DISCOUNT_PERCENTAGE = BigDecimal.valueOf(discountPercentage);
   }
 
   public Currency getDefaultCurrency() {

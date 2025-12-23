@@ -13,18 +13,75 @@
 
   <div class="container-wrapper">
     <div class="details container">
-      <h2 class="product-name">Product: <span th:text="${productDetailDTO.product.name}">Name</span></h2>
-      <p class="product-size">Size: <span th:text="${productDetailDTO.product.size}">Size</span></p>
-      <p class="product-color">Color: <span th:text="${productDetailDTO.product.color}">Color</span></p>
-      <p class="product-inventory" th:unless="${productDetailDTO.isSoldOut}">Stock: <span
-          th:text="${productDetailDTO.stockCount}">Color</span></p>
-      <p class="product-inventory" th:if="${productDetailDTO.isSoldOut}">SOLD OUT</p>
-      <p class="product-price">Price: <span
-          th:text="${#numbers.formatDecimal(productDetailDTO.product.price, 1, 2)}">Price</span></p>
-      <a th:href="@{/api/cart/add/{id}(id=${productDetailDTO.product.id})}">
-        <button th:unless="${productDetailDTO.isSoldOut}" type="button">Add to cart</button>
-      </a>
+      <div class="product-spotlight">
+        <div class="product-image">
+          <img src="https://picsum.photos/200/200?grayscale&blur=2" alt="">
+        </div>
+        <div class="product-info">
+          <h2 th:text="${productDetailDTO.product.name}">Classic T-Shirt</h2>
+          <span class="product-price" th:text="${productDetailDTO.product.price}">13.99</span>
+
+          <!-- Product Specs Grid -->
+          <div class="product-specs">
+            <span class="spec-label">Size:</span>
+            <span class="spec-value" th:text="${productDetailDTO.product.size}">M</span>
+
+            <span class="spec-label">Color:</span>
+            <span class="spec-value" th:text="${productDetailDTO.product.color}">Black</span>
+
+            <span class="spec-label">Availability:</span>
+            <p class="stock-badge in-stock" th:unless="${productDetailDTO.isSoldOut}">In Stock (
+              <span th:text="${productDetailDTO.stockCount}">count</span> )
+            </p>
+            <p class="stock-badge out-of-stock" th:if="${productDetailDTO.isSoldOut}">SOLD OUT</p>
+          </div>
+        </div>
+
+        <a th:href="@{/api/cart/add/{id}(id=${productDetailDTO.product.id})}">
+          <button th:unless="${productDetailDTO.isSoldOut}" type="button">Add to cart</button>
+        </a>
+      </div>
+      <div class="reviews-header">
+        <h3>Community Reviews</h3>
+      </div>
+      <div class="content-wrapper">
+        <div class="reviews-list">
+          <div class="review-card">
+            <div class="card-header">
+              <div class="user-profile">
+                <span class="user-name">John Doe</span>
+              </div>
+              <span class="review-date">Oct 12, 2023</span>
+            </div>
+            <p class="review-text">
+              The sound quality is absolutely amazing for the price point.
+              I've been using them for my daily commute and the battery life is impressive.
+            </p>
+          </div>
+        </div>
+        <div class="write-review-container">
+          <div class="form-header">
+            <h3>Add Your Review</h3>
+          </div>
+          <form class="review-form">
+            <input type="text" name="product-id" th:value="${productDetailDTO.product.id}" class="hidden-inputs">
+            <input type="text" name="product-name" th:value="${productDetailDTO.product.name}" class="hidden-inputs">
+            <div class="form-group">
+              <label class="form-label">Name</label>
+              <input type="text" class="form-input" name="username" placeholder="John Doe">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Review</label>
+              <textarea class="form-textarea" placeholder="How was your experience?"></textarea>
+            </div>
+            <button type="button" class="submit-btn">Post Review</button>
+          </form>
+        </div>
+
+      </div>
+      </section>
     </div>
+  </div>
 </body>
 
 </html>

@@ -45,8 +45,8 @@
         <h3>Community Reviews</h3>
       </div>
       <div class="content-wrapper">
-        <div class="reviews-list" th:if="${newReview != null}">
-          <div class="review-card">
+        <div class="reviews-list" id="reviews-container">
+          <div class="review-card" th:if="${newReview != null}">
             <div class="card-header">
               <div class="user-profile">
                 <span class="user-name" th:text="${newReview.userName}">John Doe</span>
@@ -58,24 +58,31 @@
               I've been using them for my daily commute and the battery life is impressive.
             </p>
           </div>
-        </div>
-        <div class="reviews-list" th:if="${newReview == null}">
-          <i>No Reviews Yet!</i>
+          <div th:if="${newReview == null}" id="no-reviews-msg">
+            <div class="review-card">
+              <div class="review-header">
+                <i>No Reviews Yet!</i>
+              </div>
+              <p class="review-text">Post a review using the form on the right and it would show up here!</p>
+            </div>
+          </div>
         </div>
         <div class="write-review-container">
           <div class="form-header">
             <h3>Add Your Review</h3>
           </div>
-          <form class="review-form" method="post" action="/review/submit">
-            <input type="text" name="productId" th:value="${productDetailDTO.product.id}" class="hidden-inputs">
-            <input type="text" name="productName" th:value="${productDetailDTO.product.name}" class="hidden-inputs">
+          <form class="review-form" id="reviewForm">
+            <input type="text" id="productId" name="productId" th:value="${productDetailDTO.product.id}"
+              class="hidden-inputs">
+            <input type="text" id="productName" name="productName" th:value="${productDetailDTO.product.name}"
+              class="hidden-inputs">
             <div class="form-group">
               <label class="form-label">Name</label>
-              <input type="text" class="form-input" name="userName" placeholder="John Doe" required>
+              <input type="text" class="form-input" id="userName" name="userName" placeholder="John Doe" required>
             </div>
             <div class="form-group">
               <label class="form-label">Review</label>
-              <textarea name="reviewText" class="form-textarea" placeholder="How was your experience?"
+              <textarea name="reviewText" class="form-textarea" id="reviewText" placeholder="How was your experience?"
                 required></textarea>
             </div>
             <button type="submit" class="submit-btn">Post Review</button>
@@ -83,9 +90,84 @@
         </div>
 
       </div>
-      </section>
     </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+  <script>
+    const stompClient = new StompJs.Client({
+      brokerURL: 'ws://localhost:8080/review-websocket'
+    });
+
+    stompClient.onConnect = (frame) => {
+      console.log('Connected: ' + frame)
+
+      stompClient.subscribe('/topic/reviews', (message) => {
+        const review = JSON.parse(message.body);
+        showReview(review);
+      })
+    };
+    stompClient.onWebSocketError = (error) => {
+      console.error('Error with websocket', error);
+    };
+    stompClient.onStompError = (frame) => {
+      console.error('Broker reported error: ' + frame.headers['message']);
+      console.error('Additional details: ' + frame.body);
+    };
+    stompClient.activate();
+    const form = document.getElementById('reviewForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault(); // Stop standard HTTP POST
+
+      const productId = document.getElementById('productId').value;
+      const productName = document.getElementById('productName').value;
+      const userName = document.getElementById('userName').value;
+      const reviewText = document.getElementById('reviewText').value;
+
+      stompClient.publish({
+        destination: "/shop/review",
+        body: JSON.stringify({
+          productId: parseInt(productId),
+          productName: productName,
+          userName: userName,
+          reviewText: reviewText
+        })
+      });
+
+      form.reset();
+    });
+
+    function showReview(review) {
+      const container = document.getElementById('reviews-container');
+
+      const noReviewsMsg = document.getElementById('no-reviews-msg');
+      if (noReviewsMsg) {
+        noReviewsMsg.remove();
+      }
+
+      const card = document.createElement('div');
+      card.className = 'review-card';
+
+      let displayDate = review.date;
+      if (Array.isArray(review.date)) {
+        const dateObj = new Date(review.date[0], review.date[1] - 1, review.date[2], review.date[3], review.date[4]);
+        displayDate = dateObj.toLocaleString();
+      } else if (!displayDate) {
+        displayDate = 'Just now';
+      }
+
+      card.innerHTML = `
+            <div class="card-header">
+              <div class="user-profile">
+                <span class="user-name">${review.userName}</span>
+              </div>
+              <small class="review-date">${displayDate}</small>
+            </div>
+            <p class="review-text">${review.reviewText}</p>
+        `;
+
+      container.prepend(card);
+    }
+  </script>
 </body>
 
 </html>

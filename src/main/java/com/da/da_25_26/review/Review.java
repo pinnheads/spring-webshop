@@ -1,24 +1,20 @@
 package com.da.da_25_26.review;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Review {
   private Long productId;
   private String productName;
   private String userName;
   private String reviewText;
-  private LocalDateTime date;
-
-  public Review() {
-    this.date = LocalDateTime.now();
-  }
+  private String date;
 
   public Review(Long productId, String productName, String userName, String reviewText) {
     this.productId = productId;
     this.productName = productName;
     this.userName = userName;
     this.reviewText = reviewText;
-    this.date = LocalDateTime.now();
   }
 
   public Long getProductId() {
@@ -53,22 +49,25 @@ public class Review {
     this.reviewText = reviewText;
   }
 
-  public LocalDateTime getDate() {
+  public String getDate() {
     return date;
   }
 
-  public void setDate(LocalDateTime date) {
+  public void setDate(String date) {
     this.date = date;
+  }
+
+  public void setDate(LocalDateTime date) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, YYYY");
+    this.date = date.format(formatter);
   }
 
   @Override
   public String toString() {
-    return "Review{" +
-        "productId=" + productId +
-        ", productName='" + productName + '\'' +
-        ", userName='" + userName + '\'' +
-        ", reviewText='" + reviewText + '\'' +
-        ", date=" + date +
-        '}';
+    return "Review:\n" +
+        "ProductID: " + this.productId + "\n" +
+        "ProductName: " + this.productName + "\n" +
+        "UserName: " + this.userName + "\n" +
+        "ReviewText: " + this.reviewText + "\n";
   }
 }

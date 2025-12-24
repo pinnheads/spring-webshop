@@ -2,6 +2,8 @@ package com.da.da_25_26.review;
 
 import java.time.LocalDateTime;
 
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,11 +33,16 @@ public class ReviewController {
 
     LocalDateTime now = LocalDateTime.now();
     review.setDate(now);
-    System.out.println(review.toString());
 
     model.addAttribute("newReview", review);
     model.addAttribute("productDetailDTO", productDetailFacade.getProductDetailsById(productId));
 
     return "detail";
+  }
+
+  @MessageMapping("/review")
+  @SendTo("/topic/reviews")
+  public Review handleReviewMessage(Review review) {
+    return review;
   }
 }

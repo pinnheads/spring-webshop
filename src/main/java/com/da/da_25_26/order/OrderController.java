@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class OrderController {
-  private final OrderFacade orderFacade;
+  private final OrderAdapter orderAdapter;
 
-  public OrderController(OrderFacade orderFacade) {
-    this.orderFacade = orderFacade;
+  public OrderController(OrderAdapter orderAdapter) {
+    this.orderAdapter = orderAdapter;
   }
 
   @PostMapping("/checkout")
   public String checkout(@RequestParam BigDecimal totalPrice, Model model) {
-    Order order = orderFacade.finalizeOrder(totalPrice);
+    Order order = orderAdapter.finalizeOrder(totalPrice);
     model.addAttribute("order", order);
     return "order-success";
   }

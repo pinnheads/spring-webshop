@@ -6,4 +6,6 @@ interface IUserService {
   Optional<User> getUserById(long id);
 
   User createUser(String firstName, String lastName, String email, String address);
+
+  Long getUserId();
 }

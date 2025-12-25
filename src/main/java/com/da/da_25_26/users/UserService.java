@@ -17,4 +17,9 @@ public class UserService implements IUserService {
   public User createUser(String firstName, String lastName, String email, String address) {
     return User.createUser(firstName, lastName, email, address);
   }
+
+  @Override
+  public Long getUserId() {
+    return 1L;
+  }
 }

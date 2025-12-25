@@ -58,9 +58,9 @@ public class PriceCalculationService {
     }
 
     if (fromCurrency == Currency.EURO && toCurrency == Currency.DOLLAR) {
-      return amount.multiply(eurToDollarRate);
+      return roundPrice(amount.multiply(eurToDollarRate));
     } else if (fromCurrency == Currency.DOLLAR && toCurrency == Currency.EURO) {
-      return amount.multiply(dollarToEurRate);
+      return roundPrice(amount.multiply(dollarToEurRate));
     }
 
     return roundPrice(amount);
@@ -68,7 +68,7 @@ public class PriceCalculationService {
 
   public BigDecimal applyVoucher(BigDecimal currentTotal) {
     BigDecimal discount = currentTotal.multiply(VOUCHER_DISCOUNT_PERCENTAGE);
-    return currentTotal.subtract(discount);
+    return roundPrice(currentTotal.subtract(discount));
   }
 
   public int getVoucherPercentage() {

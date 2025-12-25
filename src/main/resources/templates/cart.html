@@ -55,7 +55,6 @@
             <p class="heading">Total</p>
             <p class="price" th:text="${#numbers.formatDecimal(cart.total, 1, 2)}">Total price</p>
           </div>
-          <!-- TODO: Implement currency conversion -->
           <hr>
           <small><i>Prices are displayed in
               <a th:if="${currency.name() == 'EURO'}"
@@ -65,6 +64,11 @@
                 th:href="@{/api/cart(currency='EURO', voucher=${cart.voucherApplied})}"><span
                   th:text="${currency.name()}"></span></a>
             </i></small>
+
+          <form action="/checkout" method="post" style="margin-top: 15px;">
+            <input type="hidden" name="totalPrice" th:value="${cart.total}">
+            <button type="submit" class="btn">Pay now</button>
+          </form>
         </div>
 
 

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Order Success</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+  <header th:replace="fragments/navbar :: navbar"></header>
+
+  <div class="container-wrapper">
+    <div class="order-success container">
+      <h2 style="color: #219653;">Order Placed Successfully!</h2>
+      <p>Thank you for your purchase.</p>
+      <div class="product-specs">
+        <span class="spec-label">Order ID:</span>
+        <span class="spec-value" th:text="${order.id}">M</span>
+
+        <span class="spec-label">User ID:</span>
+        <span class="spec-value" th:text="${order.userId}">Black</span>
+
+        <span class="spec-label">Total Paid:</span>
+        <span th:text="${order.totalPrice}">count</span>
+      </div>
+      <div class="continue-shopping-btn">
+        <a href="/api/products" class="btn">Continue Shopping</a>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

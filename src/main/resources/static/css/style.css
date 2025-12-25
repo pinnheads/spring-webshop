@@ -2,6 +2,7 @@
 @import url("catalog.css");
 @import url("detail.css");
 @import url("cart.css");
+@import url("order-success.css")
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -106,10 +107,10 @@ button:hover, .btn:hover {
 }
 
 .container-wrapper {
-min-height: 90vh;
-display: grid;
-place-items: center;
-width: 100%;
+  min-height: 90vh;
+  display: grid;
+  place-items: center;
+  width: 100%;
 }
 
 .container {
